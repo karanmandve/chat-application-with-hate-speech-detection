@@ -12,6 +12,7 @@ import {
   IconButton,
   Text,
   Image,
+  Avatar,
 } from "@chakra-ui/react";
 
 const ProfileModal = ({ user, children }) => {
@@ -42,11 +43,11 @@ const ProfileModal = ({ user, children }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Image
+            <Avatar
               borderRadius="full"
               boxSize="150px"
               src={user.pic}
-              alt={user.name}
+              name={user.name}
             />
             <Text
               fontSize={{ base: "28px", md: "30px" }}
