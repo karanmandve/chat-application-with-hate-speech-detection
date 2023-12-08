@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Message = require("../models/messageModel");
 const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
+const detectHateSpeech = require("../ai/hsd");
 
 //@description     Get all Messages
 //@route           GET /api/Message/:chatId
@@ -24,35 +25,16 @@ const allMessages = asyncHandler(async (req, res) => {
 const sendMessage = asyncHandler(async (req, res) => {
   const { content, chatId } = req.body;
 
-
-const k = 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;
-
-// const {OpenAI} = require("openai");
-
-// // const config = new Configuration({
-// //     apiKey: "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"
-// // })
-
-
-// const openai = new OpenAI({
-//     apiKey: "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"
-// });
-
-// const message = "you fuck everything"
-
-// async function main() {
-//     const completion = await openai.chat.completions.create({
-//       messages: [{ role: "system", content: `${message} contain bad word or not` }],
-//       model: "gpt-3.5-turbo",
-//     });
-  
-//     console.log(completion.choices[0]);
-//   }
-  
-// main();
-
-
-  
+  detectHateSpeech(content)
+      .then(result => {
+          if (result === true){
+            return res.sendStatus(400);
+          }
+      })
+      .catch(error => {
+      console.error('Error occurred:', error);
+      return res.sendStatus(400);
+      });
 
   if (!content || !chatId) {
     console.log("Invalid data passed into request");

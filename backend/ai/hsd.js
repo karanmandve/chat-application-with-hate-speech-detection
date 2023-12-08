@@ -17,27 +17,29 @@ async function detectHateSpeech(inputString) {
     }
 }
 
+module.exports = detectHateSpeech;
+
 // Example usage:
-const inputText = 'what are you doing?';
+// const inputText = 'what are you doing?';
 
 
-const testInputs =[
-    "Hey, How are you doing?",
-    "I'm good",
-    "you will die soon",
-    "go fuck yourself",
-    "nigga shut the fuck up!",
-    "the weather is really good today",
-    "I'm sorry, but I'm late for work. so I gotta go"
-]
+// const testInputs =[
+//     "Hey, How are you doing?",
+//     "I'm good",
+//     "you will die soon",
+//     "go fuck yourself",
+//     "nigga shut the fuck up!",
+//     "the weather is really good today",
+//     "I'm sorry, but I'm late for work. so I gotta go"
+// ]
 
 
-testInputs.forEach(input => {
-    detectHateSpeech(input)
-      .then(result => {
-        console.log(`Text: "${input}" - Hate Speech Detected: ${result}`);
-      })
-      .catch(error => {
-        console.error('Error occurred:', error);
-      });
-  });
+
+// detectHateSpeech(input)
+//     .then(result => {
+//     console.log(`Text: "${input}" - Hate Speech Detected: ${result}`);
+//     })
+//     .catch(error => {
+//     console.error('Error occurred:', error);
+//     });
+  
