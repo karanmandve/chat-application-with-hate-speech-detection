@@ -10,7 +10,7 @@ async function detectHateSpeech(inputString) {
             }
         });
 
-        return response.status === 200;
+        return !(response.status === 200);
     } catch (error) {
         console.error('Error:', error);
         return false;
@@ -18,8 +18,26 @@ async function detectHateSpeech(inputString) {
 }
 
 // Example usage:
-const inputText = 'hey how you doing';
-detectHateSpeech(inputText)
-    .then(result => {
-        console.log('Response:', result);
-    });
+const inputText = 'what are you doing?';
+
+
+const testInputs =[
+    "Hey, How are you doing?",
+    "I'm good",
+    "you will die soon",
+    "go fuck yourself",
+    "nigga shut the fuck up!",
+    "the weather is really good today",
+    "I'm sorry, but I'm late for work. so I gotta go"
+]
+
+
+testInputs.forEach(input => {
+    detectHateSpeech(input)
+      .then(result => {
+        console.log(`Text: "${input}" - Hate Speech Detected: ${result}`);
+      })
+      .catch(error => {
+        console.error('Error occurred:', error);
+      });
+  });
