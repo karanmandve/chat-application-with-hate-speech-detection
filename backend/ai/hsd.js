@@ -1,3 +1,4 @@
+const fetch =require("node-fetch");
 async function detectHateSpeech(inputString) {
     const url = 'https://fuk.ai/detect-hatespeech/';
     const authToken = '8570fd1340a48e255a84dd852261416e9d946fb50d0daf6820e257b02dba3ca4';

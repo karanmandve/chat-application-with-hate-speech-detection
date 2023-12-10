@@ -89,12 +89,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config
         );
-        socket.emit("new message", data);
-        setMessages([...messages, data]);
+        
+        if(data != null ){  
+          socket.emit("new message", data);
+          setMessages([...messages, data]);
+        }
       } catch (error) {
         toast({
-          title: "Error Occured!",
-          description: "Failed to send the Message",
+          title: "WARNING!!",
+          description: "Meassage Blocked:abusive content detected",
           status: "error",
           duration: 5000,
           isClosable: true,
