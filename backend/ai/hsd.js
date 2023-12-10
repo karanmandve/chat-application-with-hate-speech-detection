@@ -17,7 +17,7 @@ async function detectHateSpeech(inputString) {
     }
 }
 
-module.exports = detectHateSpeech;
+module.exports = {detectHateSpeech};
 
 // Example usage:
 // const inputText = 'what are you doing?';
