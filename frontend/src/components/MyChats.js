@@ -106,8 +106,8 @@ const MyChats = ({ fetchAgain }) => {
                   borderRadius='full'
                   boxSize="50px"
                  
-                  src={chat.users[1].pic}
-                  name={chat.users[1].name}
+                  src={chat.users[0]?._id === loggedUser?._id ? chat.users[1].pic : chat.users[0].pic}
+                  name={chat.users[0]?._id === loggedUser?._id ? chat.users[1].name : chat.users[0].name}
                   />
                   <Box pl={2}>
                     <Text>
