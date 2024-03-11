@@ -1,21 +1,38 @@
 const fetch =require("node-fetch");
 async function detectHateSpeech(inputString) {
-    const url = 'https://fuk.ai/detect-hatespeech/';
-    const authToken = '8570fd1340a48e255a84dd852261416e9d946fb50d0daf6820e257b02dba3ca4';
+    // const url = 'https://fuk.ai/detect-hatespeech/';
+    // const authToken = '8570fd1340a48e255a84dd852261416e9d946fb50d0daf6820e257b02dba3ca4';
 
-    try {
-        const response = await fetch(`${url}?input=${encodeURIComponent(inputString)}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${authToken}`
-            }
-        });
+    // try {
+    //     const response = await fetch(`${url}?input=${encodeURIComponent(inputString)}`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Authorization': `Token ${authToken}`
+    //         }
+    //     });
 
-        return !(response.status === 200);
-    } catch (error) {
-        console.error('Error:', error);
+    //     return !(response.status === 200);
+    // } catch (error) {
+    //     console.error('Error:', error);
+    //     return false;
+    // }
+
+    const response = await fetch(
+		"https://api-inference.huggingface.co/models/Hate-speech-CNERG/indic-abusive-allInOne-MuRIL",
+		{
+			headers: { Authorization: "Bearer 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" },
+			method: "POST",
+			body: JSON.stringify("inputs: "+inputString),
+		}
+	);
+	const result = await response.json();
+    if(result[0][0].label == "LABEL_0"){
         return false;
     }
+    else{
+        return true;
+    }
+	
 }
 
 module.exports = {detectHateSpeech};
