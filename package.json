@@ -21,6 +21,7 @@
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
+    "googleapis": "^134.0.0",
     "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.9",
