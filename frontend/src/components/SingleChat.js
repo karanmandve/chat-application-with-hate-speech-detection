@@ -126,6 +126,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
+
+      //added notification
+        Notification.requestPermission().then((result)=>{
+            // console.log(result);
+        })
+      const noti= new Notification(newMessageRecieved.sender.name,{body:newMessageRecieved.content, icon: newMessageRecieved.sender.pic})
+  
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -138,7 +145,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setMessages([...messages, newMessageRecieved]);
       }
     });
-  });
+  },[]); 
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
