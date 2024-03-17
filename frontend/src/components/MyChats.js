@@ -5,6 +5,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
@@ -13,7 +15,7 @@ import { Avatar,Flex } from "@chakra-ui/react";
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
-  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  const { selectedChat, setSelectedChat, user, chats, setChats ,notification,setNotification} = ChatState();
 
   const toast = useToast();
 
@@ -46,6 +48,35 @@ const MyChats = ({ fetchAgain }) => {
     // eslint-disable-next-line
   }, [fetchAgain]);
 
+  let count=(rid)=>{
+    let count=0;
+    notification.map((notif)=>{
+    console.log(notif);
+      // let id=notif.chat.users[0]?._id === notif.sender._id ?._id ? notif.chat.users[0]._id : notif.chat.users[1]._id;
+      let id = notif.chat.users[0]._id === notif.sender._id ? notif.chat.users[0]._id : notif.chat.users[1]._id;
+      
+      if(id === rid){
+        count++;
+      }
+    });
+    return count;
+  };
+  
+  let isSelected=(rid)=>{
+    console.log(selectedChat);
+    console.log(rid);
+    if(selectedChat !== undefined && selectedChat.users !==undefined ){
+        let id = selectedChat.users[0]._id === rid ? selectedChat.users[0]._id : selectedChat.users[1]._id;
+      if(id === rid){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    return false;
+  }
+console.log(chats);
   return (
     <Box
       d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
@@ -92,7 +123,17 @@ const MyChats = ({ fetchAgain }) => {
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
-                onClick={() => setSelectedChat(chat)}
+                onClick={() =>{ setSelectedChat(chat);console.log(chat);setNotification(notification.filter((n)=>{
+                  let rec=chat.users[0]?._id === loggedUser?._id ? chat.users[1]._id : chat.users[0]._id;
+                  let receiver = n.chat.users[0]._id === rec ? n.chat.users[0]._id :n.chat.users[1]._id;
+                  if(rec !== receiver){
+                      return true;
+                  }
+                  else{
+                      return false;
+                  }
+                  
+                }))}}
                 cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
@@ -101,7 +142,7 @@ const MyChats = ({ fetchAgain }) => {
                 borderRadius="lg"
                 key={chat._id}
               >
-                <Flex>                  
+                <Flex wrap="wrap">                 
                   <Avatar
                   borderRadius='full'
                   boxSize="50px"
@@ -123,7 +164,13 @@ const MyChats = ({ fetchAgain }) => {
                             : chat.latestMessage.content}
                         </Text>
                       )}
-                  </Box>  
+                  </Box>
+                  { !isSelected(chat.users[0]?._id === loggedUser?._id ? chat.users[1]._id : chat.users[0]._id) ? <NotificationBadge
+                    count={count(chat.users[0]?._id === loggedUser?._id ? chat.users[1]._id : chat.users[0]._id)}
+                    effect={Effect.SCALE}
+                    style={{backgroundColor:"#04ed04",top : "-3rem",right: "0px"}}
+                  />:"" }
+                  
                 </Flex> 
               </Box>
             ))}
@@ -137,3 +184,5 @@ const MyChats = ({ fetchAgain }) => {
 };
 
 export default MyChats;
+
+// chat.users[0]?._id === loggedUser?._id ? chat.users[1]._id : chat.users[0]._id
