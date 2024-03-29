@@ -97,7 +97,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       } catch (error) {
         toast({
           title: "WARNING!!",
-          description: "Meassage Blocked:abusive content detected",
+          description: "Message Blocked: '"+ newMessage +"' contains abusive content",
           status: "error",
           duration: 5000,
           isClosable: true,
