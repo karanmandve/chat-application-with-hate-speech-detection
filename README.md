@@ -1,4 +1,7 @@
 # chat-application-with-hate-speech-detection
+
+[Visit the chat app](https://chat-app-e4qf.onrender.com)
+
 ## Installation
 
 1. **Clone the repository:**
